@@ -1,11 +1,6 @@
 import math
-
-#----------------------------------------------Constant values and list of properties-----------------------------------
-
-#-----------------------------------------------------------------------------------------------------------------------
-
-
-
+from basicparameters import *
+from MaterialSelection import *
 #----------------------------------------------Function definition for buckling analysis--------------------------------
 
 def euler_column_buckling (E, I, A, L):
@@ -25,6 +20,14 @@ def shell_buckling (Q, k, E, poisson, t1, L):
     return sigma_cr
 
 #----------------------------------------------------------Check for buckling failure-----------------------------------
+sigma_cr_e = euler_column_buckling(E, I, A, 1) # length still needs to be linked
+
+shell_buckling_k(0.5, 1, R, t_1, poisson)
+
+
+
+
+
 
 applied_stress = 0#yet to connect and determine
 result = [] #yet to be filled in
@@ -39,3 +42,4 @@ for i in result:
 #-----------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------WP2 configuration check------------------------------------------------
 #-----------------------------------------------------------------------------------------------------------------------
+

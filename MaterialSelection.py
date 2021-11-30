@@ -4,7 +4,8 @@ h=1.2        #arbitrary
 rho=4520    #aluminium (kg/m3)
 SF=1.375 #from ADSEE
 sigma_y=880000000 #Pa, aluminum 2024 T3
-
+E = 731. * 10 ** 9 #Pa, aluminim 2024 T3
+poisson =
 def tank_internal_stresses(pressure, radius, yield_strength,safety_factor):
     thickness_cylinder= (pressure*radius)/yield_strength*safety_factor
     thickness_sphere=(pressure*radius)/(2*yield_strength)*safety_factor
