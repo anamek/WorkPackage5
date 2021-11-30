@@ -1,9 +1,7 @@
 import numpy as np
 
-# WP 4 forces; [500, 7306.3, 500] F_1 = [1924.7, 1924.7, 1988.9]
-
-f_1 = [1924.7, 1924.7, 1988.9]
-f_0 = [500, 7306.3, 500]
+f_1 = [1924.7, 1924.7, 1988.9]  # From page 7 in WP4
+f_0 = [500, 7306.3, 500]  # From lug_design.py
 f_r = np.add(f_0, f_1)
 lug_mass = 0.003574  # kg
 magnitude = np.linalg.norm(f_r)
