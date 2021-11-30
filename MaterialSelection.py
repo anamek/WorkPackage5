@@ -1,9 +1,9 @@
-R=1.1       #in meters
-P=1950000 #in Pa, from WP2
-h=1.2        #arbitrary
-rho=4520    #aluminium (kg/m3)
+R=0.614       #in meters
+P=1850000 #in Pa, from WP2
+h=0        #arbitrary
+rho=4470.5    #titanium
 SF=1.375 #from ADSEE
-sigma_y=880000000 #Pa, aluminum 2024 T3
+sigma_y=848000000 #Pa
 
 def tank_internal_stresses(pressure, radius, yield_strength,safety_factor):
     thickness_cylinder= (pressure*radius)/yield_strength*safety_factor
