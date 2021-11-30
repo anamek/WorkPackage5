@@ -7,3 +7,6 @@ f_t = np.add(f_0,f_1)
 magnitude = np.linalg.norm(f_t)
 
 print(round(magnitude,3))
+
+total_compressive_force =
+number_of_attachments = 1
