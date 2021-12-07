@@ -17,9 +17,8 @@ def get_prop_vol(dry_mass, Delta_V, vol_margin):
     
     V_fuel = m_fuel / rho_fuel
     V_ox = m_ox / rho_ox
-    
+    print(m_prop)
     return V_fuel * vol_margin, V_ox * vol_margin
-
 
 #get length of tank if pill shaped.
 def L_tank(R_tank, V):
@@ -62,11 +61,15 @@ def t_for_buckling(R, L, E, M):
     return t_center
 
 tank_vol_margin = 1.1
-m_struct = 885.5
+m_struct = 852.
+m_rest = 33.5 + 930.
 m_tank = 90.
-for i in range(10):
-    prop_vols = get_prop_vol(930 + m_struct + m_tank, 2300,tank_vol_margin)
-
+L_struct = 6.
+#L_struct = (L_tank_fuel + L_tank_ox)*1.5
+m_tot = m_rest + m_struct + m_tank
+for i in range(5):
+    prop_vols = get_prop_vol(m_tot, 2300,tank_vol_margin)
+    
     m_tank = 0.46 * sum(prop_vols)
     R_tank_fuel = R_tank_ox = R_tank(prop_vols[0])
     L_tank_fuel = 2 * R_tank_fuel
@@ -74,12 +77,12 @@ for i in range(10):
 
     #radius of structure is the same as fuel tank + 5cm margin
     R_struct = math.ceil((R_tank_fuel + 0.05)*100)/100
-    L_struct = (L_tank_fuel + L_tank_ox)*1.5
-    L_struct = 6
+
     mat = materials.materials[1]
     t_struct = t_for_buckling(R_struct, L_struct , mat["E"], 3762.)
     m_struct = 2 * math.pi * R_struct * t_struct * L_struct * mat["rho"]
-    print(R_struct, L_struct, t_struct, m_struct)
+    m_tot = m_rest + m_struct + m_tank
+print(R_struct, L_struct, t_struct, m_struct, m_tot)
 
 
 
