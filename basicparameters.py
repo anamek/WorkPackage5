@@ -1,11 +1,6 @@
 import math
-from MaterialSelection import *
-#-------------------------------------------Geometric properties--------------------------------------------------------
 
-#--------------------------------------------------Geometric proeprties functions---------------------------------------
-#-----------------------------------These functions apply to cross sections at which t1 is present----------------------
-#-----------------------------------Thin walled is assumed to apply here------------------------------------------------
-#Axial loading
+#-------------------------------------------Geometric properties--------------------------------------------------------
 
 def cross_sectional_areac (R, t_1):
     area = (math.pi * R ** 2) - (math.pi * (R - t_1) ** 2)
