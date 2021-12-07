@@ -1,6 +1,6 @@
 import math
-import matplotlib as plt
-import basicparameters
+
+#-----------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------Function definition for buckling analysis--------------------------------
 
 def euler_column_buckling (E, I, A, L):
@@ -13,7 +13,7 @@ def shell_buckling (Lambda, L, R, t1, poisson, P, E):
     sigma_cr_shell = (1.983 - 0.983 * math.exp(-23.14 * Q)) * k * ((math.pi ** 2 * E) / (12 * (1 - poisson ** 2))) * (t1 / L) ** 2
     return sigma_cr_shell
 
-#----------------------------------------------------------Check for buckling failure--axial and lateral----------------
+#----------------------------Check for buckling failure-----------------------------------------------------------------
 def buckling_check (sigma_cr_euler, sigma_cr_shell, applied_stress):
     if sigma_cr_euler > applied_stress:
         print("The critical stress for the euler buckling mode is:", sigma_cr_euler)
@@ -32,4 +32,3 @@ def buckling_check (sigma_cr_euler, sigma_cr_shell, applied_stress):
 #-----------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------Iteration procedure------------------------------------------------
 #-----------------------------------------------------------------------------------------------------------------------
-
