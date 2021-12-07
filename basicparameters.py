@@ -36,3 +36,9 @@ Al = cross_sectional_areal(h, R, d, t_1,t_2)
 print("Lateral I:", Il)
 print("Lateral A:", Al)
 print("check:",Il / Al)
+
+
+
+
+
+

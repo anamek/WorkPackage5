@@ -3,7 +3,7 @@ import matplotlib as plt
 from basicparameters import *
 from MaterialSelection import *
 #----------------------------------------------Function definition for buckling analysis--------------------------------
-L = h
+L = h + 2 * R
 def euler_column_buckling (E, I, A, L):
     sigma_cr = (math.pi ** 2 * E * I) / (A * L ** 2)
     return sigma_cr
@@ -38,8 +38,8 @@ applied_stressl = (4.1 * 9.81 * mass) / Al #lateral
 
 resultc = [sigma_cr_ea / (1 * 10 ** 9), sigma_cr_sa / (1 * 10 ** 9)]
 resultl = [sigma_cr_el / (1 * 10 ** 9), sigma_cr_sl / (1 * 10 ** 9)]
-print("Column Buckling due to compressive stress:", resultc[0], "Shell Buckling due to compressive stress:", resultc[1], "[GPA]")
-print("Column Buckling due to lateral stress:", resultc[0], "Shell Buckling due to lateral stress:", resultc[1], "[GPA]")
+print("Critical stress, column buckling, axial:", resultc[0], "Critical stress, shell buckling ", resultc[1], "[GPA]")
+print("Critical stress, column buckling:", resultc[0], "Critical stress, shell buckling", resultc[1], "[GPA]")
 
 for i in resultc:
     if i > applied_stressc / (1 * 10 ** 9):
@@ -57,6 +57,6 @@ for i in resultl:
 #------------3rd = column buckling under lateral loads
 #------------4th = shell buckling under lateral loads
 #-----------------------------------------------------------------------------------------------------------------------
-#------------------------------------------------WP2 configuration check------------------------------------------------
+#------------------------------------------------Iteration procedure------------------------------------------------
 #-----------------------------------------------------------------------------------------------------------------------
 
