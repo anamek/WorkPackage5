@@ -1,7 +1,7 @@
 R=1.1       #in meters
 d = 2 * R
 P= 1950000 #in Pa, from WP2
-h= 1.2        #arbitrary
+h= 2 * R       #arbitrary this is a cinfiguration of a sphere
 rho= 4520    #aluminium (kg/m3)
 SF= 1.375 #from ADSEE
 sigma_y= 880000000 #Pa, aluminum 2024 T3

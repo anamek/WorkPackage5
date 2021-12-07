@@ -1,4 +1,5 @@
 import math
+import matplotlib as plt
 from basicparameters import *
 from MaterialSelection import *
 #----------------------------------------------Function definition for buckling analysis--------------------------------
@@ -32,23 +33,23 @@ k = shell_buckling_k(0.5, L, R, t_1, poisson)
 Q = shell_buckling_Q(P, E, R, t_1)
 sigma_cr_sl = shell_buckling(Q, k, E, poisson, t_1, L)  #[MPa]
 
-applied_stressc = (3 * 9.81 * mass) / Ac #yet to connect and determine
-applied_stressl = (4.1 * 9.81 * mass) / Al
+applied_stressc = (3 * 9.81 * mass) / Ac #axial
+applied_stressl = (4.1 * 9.81 * mass) / Al #lateral
 
-resultc = [sigma_cr_ea / 1000000, sigma_cr_sa / 1000000]
-resultl = [sigma_cr_el / 1000000, sigma_cr_sl / 1000000]
-print("Column Buckling due to compressive stress:", resultc[0], "Shell Buckling due to compressive stress:", resultc[1], "[MPA]")
-print("Column Buckling due to lateral stress:", resultc[0], "Shell Buckling due to lateral stress:", resultc[1], "[MPA]")
+resultc = [sigma_cr_ea / (1 * 10 ** 9), sigma_cr_sa / (1 * 10 ** 9)]
+resultl = [sigma_cr_el / (1 * 10 ** 9), sigma_cr_sl / (1 * 10 ** 9)]
+print("Column Buckling due to compressive stress:", resultc[0], "Shell Buckling due to compressive stress:", resultc[1], "[GPA]")
+print("Column Buckling due to lateral stress:", resultc[0], "Shell Buckling due to lateral stress:", resultc[1], "[GPA]")
 
 for i in resultc:
-    if i > applied_stressc / 1000000:
+    if i > applied_stressc / (1 * 10 ** 9):
         print("The applied stress is lower the critical stress, therefore this configuration is SAFE")
-    elif i < applied_stressc / 1000000:
+    elif i < applied_stressc / (1 * 10 ** 9):
         print("The applied stress is higher then the critical stress, therefore this configuration is NOT SAFE")
 for i in resultl:
-    if i > applied_stressl / 1000000:
+    if i > applied_stressl / (1 * 10 ** 9):
         print("The applied stress is lower the critical stress, therefore this configuration is SAFE")
-    elif i < applied_stressl / 1000000:
+    elif i < applied_stressl / (1 * 10 ** 9):
         print("The applied stress is higher then the critical stress, therefore this configuration is NOT SAFE")
 #-------------outcome of safety check:
 #------------1st = column buckling under compression
