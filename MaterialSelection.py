@@ -1,6 +1,6 @@
-R=0.614       #in meters
+R=0.53       #in meters
 P=1850000 #in Pa, from WP2
-h=0        #arbitrary
+h=1.2        #arbitrary
 rho=4470.5    #titanium
 SF=1.375 #from ADSEE
 sigma_y=848000000 #Pa
