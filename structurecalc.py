@@ -61,16 +61,16 @@ def t_for_buckling(R, L, E, M):
 
 #Main optimization loop
 #these are just some values calculated in WP2 or stuff that is constant
-tank_vol_margin = 1.1
-m_struct = 852.
-m_rest = 33.5 + 930.
-m_tank = 90.
-L_struct = 6.
-Delta_V_req = 2300
-#L_struct = (L_tank_fuel + L_tank_ox)*1.5
-#total dry mass is this:
-m_tot_dry = m_rest + m_struct + m_tank
-for i in range(5):
+
+def get_dims(m_struct, m_tank, mat):
+    tank_vol_margin = 1.1
+    m_rest = 33.5 + 930.
+    L_struct = 6.
+    Delta_V_req = 2300
+
+    #total dry mass is this:
+    m_tot_dry = m_rest + m_struct + m_tank
+
     #list of volumes for fuel and ox and total mass of propellants
     #obtained from dry mass, delta v and and the extra tank volume required
     *prop_vols, m_prop = get_prop_vol(m_tot_dry, Delta_V_req,tank_vol_margin)
@@ -84,7 +84,7 @@ for i in range(5):
     L_tank_fuel = 2 * R_tank_fuel
     L_tank_ox = L_tank(R_tank_ox, prop_vols[1])
     
-    print(R_tank_fuel, L_tank_ox)
+    #print(R_tank_fuel, L_tank_ox)
     #radius of structure is the same as fuel tank + 5cm margin
     R_struct = math.ceil((R_tank_fuel + 0.05)*100)/100
     
@@ -93,12 +93,8 @@ for i in range(5):
     #Based on buckling t is calculated, again same as in wp2. Mass follows from geometry
     t_struct = t_for_buckling(R_struct, L_struct , mat["E"], m_tot_dry + m_prop)
     m_struct = 2 * math.pi * R_struct * t_struct * L_struct * mat["rho"]
+    return(m_struct, R_struct, t_struct, R_tank_fuel, L_tank_ox) 
     
-    #new total dry mass, run through the same calculations again with updated values
-    m_tot_dry = m_rest + m_struct + m_tank
-    
-print(R_struct, L_struct, t_struct, m_struct, m_tot_dry, m_tot_dry + m_prop)
-print(R_tank_fuel, L_tank_fuel, L_tank_ox)
-print(R_sphere_tank(0.883*1.1))
+
 
 
