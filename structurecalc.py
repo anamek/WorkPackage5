@@ -50,26 +50,21 @@ def t_for_buckling(R, L, E, M):
         step = (t_max - t_min)/samples
         
         test_ts = np.linspace(t_min, t_max, samples)
-        diffs = np.abs(sigma_tot(R, L, test_ts, 3 * 9.81, 4.1 * 9.81, M) - crit_buckling_strength(R, L, test_ts, E))
+        diffs = np.abs(sigma_tot(R, L, test_ts, 3 * 9.81, 4.1 * 9.81, M)*1.1 - crit_buckling_strength(R, L, test_ts, E))
         t_center = test_ts[np.argmin(diffs)]
         t_min = t_center - step/1.9
         t_max = t_center + step/1.9
-        
-            
+          
             
     return t_center
 
 #Main optimization loop
 #these are just some values calculated in WP2 or stuff that is constant
 
-def get_dims(m_struct, m_tank, mat):
+def get_dims(m_tot_dry, mat):
     tank_vol_margin = 1.1
-    m_rest = 33.5 + 930.
     L_struct = 6.
     Delta_V_req = 2300
-
-    #total dry mass is this:
-    m_tot_dry = m_rest + m_struct + m_tank
 
     #list of volumes for fuel and ox and total mass of propellants
     #obtained from dry mass, delta v and and the extra tank volume required
@@ -87,13 +82,12 @@ def get_dims(m_struct, m_tank, mat):
     #print(R_tank_fuel, L_tank_ox)
     #radius of structure is the same as fuel tank + 5cm margin
     R_struct = math.ceil((R_tank_fuel + 0.05)*100)/100
-    
     #Al-2024 used for main structure, same tradeoff as in wp2
     mat = materials.materials[1]
     #Based on buckling t is calculated, again same as in wp2. Mass follows from geometry
     t_struct = t_for_buckling(R_struct, L_struct , mat["E"], m_tot_dry + m_prop)
     m_struct = 2 * math.pi * R_struct * t_struct * L_struct * mat["rho"]
-    return(m_struct, R_struct, t_struct, R_tank_fuel, L_tank_ox) 
+    return(m_struct, m_prop, R_struct, t_struct, R_tank_fuel, L_tank_ox, L_struct) 
     
 
 
