@@ -14,3 +14,6 @@ number_of_attachments = 1
 ratio = magnitude / total_compressive_force
 attachment_mass = ratio * lug_mass
 total_mass = attachment_mass * number_of_attachments
+
+
+

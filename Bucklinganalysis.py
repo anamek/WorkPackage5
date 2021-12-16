@@ -16,12 +16,15 @@ def shell_buckling(F_ax, L, R, t1, P, E):
     A = math.pi * 2 * R *t1 
     #k = Lambda + (12 / math.pi ** 4) * (L ** 4 / (R ** 2 * t1 ** 2)) * (1 - poisson ** 2) * (1 / Lambda)
     k = k_opt(L, R, t1)
+    print(k)
     Q = (P / E) * ((R / t1) ** 2)
     sigma_cr_shell = (1.983 - 0.983 * math.exp(-23.14 * Q)) * k * ((math.pi ** 2 * E) / (12 * (1 - poisson ** 2))) * (t1 / L) ** 2
     return sigma_cr_shell/(F_ax/A)-1, sigma_cr_shell >= F_ax/A
 
 def k_opt(L, R, t1):
     lambda_opt = round(math.sqrt((12 * L**4 * (1-0.33**2))/(math.pi**4 * R**2 * t1**2)))
+    lambda_t = 10
+    print(lambda_t + (12 * L**4 * (1-0.33**2))/(math.pi**4 * R**2 * t1**2)/lambda_t)
     return 2 * lambda_opt
 
 #----------------------------Check for buckling failure-----------------------------------------------------------------

@@ -14,10 +14,10 @@ m_tank_ox= 50. #Initial tank mass
 m_tank_fuel = 40.
 n_iter = 6
 
-xs = []
+xs, ys, zs = [],[],[]
 tank_mat = mat.materials[3]
 struct_mat = mat.materials[1]
-m_other = m_rest = 33.5 + 930.
+m_other = m_rest = 33.5 + 930. +0.250
 
 
 #iteration loop
@@ -36,7 +36,7 @@ for i in range(n_iter):
     #i only check the ox tank but buckling does not occur so im not going to bother with the other one
     while not buckle:
         t_1_ox += 0.0001 
-        buckle = ba.euler_column_buckling(F_z_ox, tank_mat["E"], L_tank_ox, R_tank_fuel, t_1_ox)[1] and ba.shell_buckling(F_z, L_tank_ox, R_tank_fuel, t_1_ox, P, tank_mat["E"])[1]
+        buckle = ba.euler_column_buckling(F_z_ox, tank_mat["E"], L_tank_ox, R_tank_fuel, t_1_ox)[1] and ba.shell_buckling(F_z_ox, L_tank_ox, R_tank_fuel, t_1_ox, P, tank_mat["E"])[1]
     ms_cb = ba.euler_column_buckling(F_z_ox, tank_mat["E"], L_tank_ox, R_tank_fuel, t_1_ox)[0]
     ms_sb = ba.shell_buckling(F_z_ox, L_tank_ox, R_tank_fuel, t_1_ox, P, tank_mat["E"])[0]
         
@@ -47,6 +47,8 @@ for i in range(n_iter):
     m_tank_fuel = ms.mass_calculation(R_tank_fuel,t_1_fuel,t_2_fuel,(0),tank_mat["rho"])
     
     xs.append(m_struct)
+    ys.append(m_tank_ox)
+    zs.append(m_tank_fuel)
     #print(m_tank + m_struct + m_other, R_struct, 6, t_struct)
     
 #perform some sanity checks:
@@ -57,18 +59,25 @@ ms_tank_h, ms_tank_l = ms.sanity_check(P, R_tank_fuel, t_1_ox, t_2_ox, tank_mat[
 print("\nStructure dimensions dimensions:")
 print("Mass={} kg, Radius={} m, L={} m t={}mm".format(round(m_struct*100)/100,math.ceil(R_struct*100)/100, math.ceil(L_struct*100)/100, math.ceil(t_struct*100000)/100))
 print("Fuel tank dimensions:")
-print("Mass={} kg, Radius={} m, t={}mm".format(round(m_tank_fuel*100)/100, math.ceil(R_tank_fuel*100)/100, math.ceil(t_1_fuel*100000)/100))
+print("Mass={} kg, Radius={} m, L={} m, t={}mm".format(round(m_tank_fuel*100)/100, math.ceil(R_tank_fuel*100)/100, math.ceil(2*R_tank_fuel*100)/100, math.ceil(t_1_fuel*100000)/100))
 print("Oxidizer tank dimensions:")
 print("Mass={} kg, Radius={} m, L={} m, t={}mm".format(round(m_tank_ox*100)/100, math.ceil(R_tank_fuel*100)/100, math.ceil(L_tank_ox*100)/100, math.ceil(t_1_fuel*100000)/100))
 print("Safety margins")
 print("Column buckling: {}, Shell buckling: {}, Buckling of structure: {}, Tank interal press: {} and {}".format(
     round(100*ms_cb)/100, round(100*ms_sb)/100, round(100*ms_struct_buckle)/100, round(100*ms_tank_h)/100, round(100*ms_tank_l)/100))
+
+print(m_tank_ox + m_tank_fuel + m_other+ m_struct + m_other + m_prop)
 print(F_z_ox, F_z_fuel)
+print(t_1_ox, t_2_ox)
 fig, ax = plt.subplots()
-bruh = ax.plot(range(n_iter), xs, "C0", marker="1")
+bruh = ax.plot(range(n_iter), xs, "C0", marker="1", label="Structure")
+bruh = ax.plot(range(n_iter), ys, "C1", marker="x", label="Oxidizer tank")
+bruh = ax.plot(range(n_iter), zs, "C2", marker="*", label="Fuel tank")
 ax.grid(True)
+ax.legend()
 ax.set_xticks(range(n_iter))
 ax.set_xlabel("n iterations")
 ax.set_ylabel("Structure mass")
 
-plt.show()
+#fig.savefig("mass_vs_iterations.pdf")
+#plt.show()
