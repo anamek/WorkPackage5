@@ -59,16 +59,17 @@ ms_tank_h, ms_tank_l = ms.sanity_check(P, R_tank_fuel, t_1_ox, t_2_ox, tank_mat[
 print("\nStructure dimensions dimensions:")
 print("Mass={} kg, Radius={} m, L={} m t={}mm".format(round(m_struct*100)/100,math.ceil(R_struct*100)/100, math.ceil(L_struct*100)/100, math.ceil(t_struct*100000)/100))
 print("Fuel tank dimensions:")
-print("Mass={} kg, Radius={} m, L={} m, t={}mm".format(round(m_tank_fuel*100)/100, math.ceil(R_tank_fuel*100)/100, math.ceil(2*R_tank_fuel*100)/100, math.ceil(t_1_fuel*100000)/100))
+print("Mass={} kg, Radius={} m, L={} m, t={}mm".format(round(m_tank_fuel*100)/100, math.ceil(R_tank_fuel*100)/100, math.ceil(2*R_tank_fuel*100)/100, math.ceil(t_2_fuel*100000)/100))
 print("Oxidizer tank dimensions:")
-print("Mass={} kg, Radius={} m, L={} m, t={}mm".format(round(m_tank_ox*100)/100, math.ceil(R_tank_fuel*100)/100, math.ceil(L_tank_ox*100)/100, math.ceil(t_1_fuel*100000)/100))
+print("Mass={} kg, Radius={} m, L={} m, t1={} mm, t2={} mm".format(
+round(m_tank_ox*100)/100, math.ceil(R_tank_fuel*100)/100, math.ceil(L_tank_ox*100)/100, math.ceil(t_1_ox*100000)/100,math.ceil(t_2_ox*100000)/100))
 print("Safety margins")
 print("Column buckling: {}, Shell buckling: {}, Buckling of structure: {}, Tank interal press: {} and {}".format(
     round(100*ms_cb)/100, round(100*ms_sb)/100, round(100*ms_struct_buckle)/100, round(100*ms_tank_h)/100, round(100*ms_tank_l)/100))
 
-print(m_tank_ox + m_tank_fuel + m_other+ m_struct + m_other + m_prop)
+print(0*m_tank_ox + 0*m_tank_fuel + m_struct + m_other + 0*m_prop)
 print(F_z_ox, F_z_fuel)
-print(t_1_ox, t_2_ox)
+print(m_ox, m_fuel)
 fig, ax = plt.subplots()
 bruh = ax.plot(range(n_iter), xs, "C0", marker="1", label="Structure")
 bruh = ax.plot(range(n_iter), ys, "C1", marker="x", label="Oxidizer tank")
